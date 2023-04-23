@@ -1,0 +1,163 @@
+<h1 class="mt-10 text-2xl font-bold">
+    Transactions for <%= user.username.charAt(0).toUpperCase() +
+    user.username.slice(1)%>
+  </h1>
+  <div class="my-5">
+    <a
+      class="cursor-pointer rounded-lg bg-sky-400 px-4 py-2 text-white duration-200 hover:bg-sky-300 dark:hover:bg-sky-500"
+      href="transactions/byCategory"
+      >Group by Category</a
+    >
+  </div>
+  
+  <p class="text-slate-700 dark:text-slate-400">
+    Click on a table header to sort by that attribute.
+  </p>
+  
+  <div
+    class="max-h-content relative mb-16 mt-10 overflow-x-auto shadow-md sm:rounded-lg">
+    <table
+      class="w-full rounded-lg text-left text-sm text-slate-500 dark:text-slate-400">
+      <thead
+        class="rounded-lg bg-slate-50 text-xs uppercase text-slate-700 dark:bg-slate-700 dark:text-slate-400">
+        <th scope="col" class="px-6 py-3">
+          <a
+            class="duration-200 hover:text-slate-500 dark:hover:text-slate-200"
+            href="transactions?sortBy=description"
+            >Description</a
+          >
+        </th>
+        <th scope="col" class="px-6 py-3">
+          <a
+            class="duration-200 hover:text-slate-500 dark:hover:text-slate-200"
+            href="transactions?sortBy=amount"
+            >Amount</a
+          >
+        </th>
+        <th scope="col" class="px-6 py-3">
+          <a
+            class="duration-200 hover:text-slate-500 dark:hover:text-slate-200"
+            href="transactions?sortBy=category"
+            >Category</a
+          >
+        </th>
+        <th scope="col" class="px-6 py-3">
+          <a
+            class="duration-200 hover:text-slate-500 dark:hover:text-slate-200"
+            href="transactions?sortBy=date"
+            >Date</a
+          >
+        </th>
+        <th></th>
+        <th></th>
+      </thead>
+      <% items.forEach(item => { %>
+      <tr
+        class="border-b border-sky-400 bg-white dark:border-sky-400 dark:bg-slate-800">
+        <td
+          class="whitespace-nowrap px-6 py-4 font-medium text-slate-900 dark:text-white">
+          <%= item.description %>
+        </td>
+        <td class="px-6 py-4"><%= item.amount %></td>
+        <td class="px-6 py-4"><%= item.category %></td>
+        <td class="px-6 py-4">
+          <%= Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short',
+          day: '2-digit', year: 'numeric' }).format( item.date) %>
+        </td>
+        <td class="px-6 py-4 duration-200 hover:text-sky-400">
+          <a href="/transactions/remove/<%= item._id %>">
+            <i class="fa-solid fa-trash"></i>
+          </a>
+        </td>
+        <td class="px-6 py-4 duration-200 hover:text-sky-400">
+          <a href="/transactions/edit/<%= item._id %>">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </a>
+        </td>
+      </tr>
+      <% }) %>
+    </table>
+  </div>
+  
+  <div class="flex w-full flex-wrap justify-center">
+    <form
+      class="flex w-full flex-1 flex-wrap justify-evenly"
+      method="post"
+      action="/transaction">
+      <div
+        class="flex flex-col rounded-lg border-2 border-slate-200 px-4 py-2 shadow-md dark:border-slate-800">
+        <div class="m-3 flex flex-wrap items-center justify-between">
+          <div class="">
+            <label
+              class="mb-0 pr-4 text-right font-bold text-opacity-75 dark:text-slate-300 dark:text-opacity-75"
+              for="description"
+              >Description:</label
+            >
+          </div>
+          <div class="flex flex-wrap">
+            <input
+              required
+              class="w-full appearance-none rounded border-2 border-slate-200 bg-slate-200 px-4 py-2 leading-tight text-slate-700 duration-200 focus:border-sky-400 focus:border-sky-400 focus:outline-none dark:border-slate-800 dark:bg-slate-800 dark:text-slate-400"
+              name="description"
+              type="text" />
+          </div>
+        </div>
+        <div class="m-3 flex flex-wrap items-center justify-between">
+          <div class="">
+            <label
+              class="mb-0 pr-4 text-right font-bold text-opacity-75 dark:text-slate-300 dark:text-opacity-75"
+              for="amount"
+              >Amount:</label
+            >
+          </div>
+          <div class="">
+            <input
+              required
+              class="w-full appearance-none rounded border-2 border-slate-200 bg-slate-200 px-4 py-2 leading-tight text-slate-700 duration-200 focus:border-sky-400 focus:border-sky-400 focus:outline-none dark:border-slate-800 dark:bg-slate-800 dark:text-slate-400"
+              name="amount"
+              type="number" />
+          </div>
+        </div>
+        <div class="m-3 flex flex-wrap items-center justify-between">
+          <div class="">
+            <label
+              class="mb-0 pr-4 text-right font-bold text-opacity-75 dark:text-slate-300 dark:text-opacity-75"
+              for="category"
+              >Category:</label
+            >
+          </div>
+          <div class="">
+            <input
+              required
+              class="w-full appearance-none rounded border-2 border-slate-200 bg-slate-200 px-4 py-2 leading-tight text-slate-700 duration-200 focus:border-sky-400 focus:border-sky-400 focus:outline-none dark:border-slate-800 dark:bg-slate-800 dark:text-slate-400"
+              name="category"
+              type="text" />
+          </div>
+        </div>
+        <div class="m-3 flex flex-wrap items-center justify-between">
+          <div class="">
+            <label
+              class="mb-0 pr-4 text-right font-bold text-opacity-75 dark:text-slate-300 dark:text-opacity-75"
+              for="date"
+              >Date:</label
+            >
+          </div>
+          <div class="">
+            <input
+              required
+              class="w-full w-full appearance-none rounded border-2 border-slate-200 bg-slate-200 px-4 py-2 leading-tight text-slate-700 duration-200 focus:border-sky-400 focus:border-sky-400 focus:outline-none dark:border-slate-800 dark:bg-slate-800 dark:text-slate-400"
+              name="date"
+              type="date" />
+          </div>
+        </div>
+      </div>
+      <div class="align-center mx-2 my-10 flex flex-col justify-center">
+        <p class="my-2 w-full text-left text-2xl font-bold">Add transaction</p>
+        <input
+          class="mt-3 cursor-pointer rounded-lg bg-sky-400 px-4 py-2 text-white duration-200 hover:bg-sky-300 dark:hover:bg-sky-500"
+          type="submit"
+          value="Add" />
+      </div>
+    </form>
+  </div>
+  

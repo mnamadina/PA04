@@ -1,20 +1,90 @@
-<pre>
-    <%= JSON.stringify(item,null,5) %>
-</pre>
-<form method="post" action="/todo/updateTodoItem">
-    <input type="hidden" name="itemId" value="<%= item._id %>">
-    new item: 
-    <input type="text" 
-           value="<%= item.item %>"
-           name="item"><br>
-    priority: <select name="priority">
-       <% [1,2,3,4,5].map(p => { %>
-        <option 
-              <%= p==item.priority?'selected':'' %>>
-              <%= p %>
-       </option>
-       <% }) %>
-    </select>
-    <br>
-    <input type="submit" value="store">
+<h1 class="mt-10 text-2xl font-bold">Edit transaction</h1>
+
+<form
+  class="flex justify-center"
+  method="POST"
+  action="/transactions/updateTransaction">
+  <input type="hidden" name="itemId" value="<%= item._id %>" />
+  <div
+    class="my-10 flex max-w-max flex-col justify-center rounded-lg border-2 border-slate-200 px-4 shadow-md dark:border-slate-800">
+    <div class="m-3 flex shrink flex-wrap items-center justify-between">
+      <div class="">
+        <label
+          class="mb-0 pr-4 text-right font-bold text-opacity-75 dark:text-slate-300 dark:text-opacity-75"
+          for="description"
+          >Description:</label
+        >
+      </div>
+      <div class="flex flex-wrap">
+        <input
+          required
+          class="w-full appearance-none rounded border-2 border-slate-200 bg-slate-200 px-4 py-2 leading-tight text-slate-700 duration-200 focus:border-sky-400 focus:border-sky-400 focus:outline-none dark:border-slate-800 dark:bg-slate-800 dark:text-slate-400"
+          name="description"
+          value="<%= item.description %>"
+          type="text" />
+      </div>
+    </div>
+    <div class="m-3 flex flex-wrap items-center justify-between">
+      <div class="">
+        <label
+          class="mb-0 pr-4 text-right font-bold text-opacity-75 dark:text-slate-300 dark:text-opacity-75"
+          for="amount"
+          >Amount:</label
+        >
+      </div>
+      <div class="">
+        <input
+          required
+          class="w-full appearance-none rounded border-2 border-slate-200 bg-slate-200 px-4 py-2 leading-tight text-slate-700 duration-200 focus:border-sky-400 focus:border-sky-400 focus:outline-none dark:border-slate-800 dark:bg-slate-800 dark:text-slate-400"
+          name="amount"
+          value="<%= item.amount %>"
+          type="number" />
+      </div>
+    </div>
+    <div class="m-3 flex flex-wrap items-center justify-between">
+      <div class="">
+        <label
+          class="mb-0 pr-4 text-right font-bold text-opacity-75 dark:text-slate-300 dark:text-opacity-75"
+          for="category"
+          >Category:</label
+        >
+      </div>
+      <div class="">
+        <input
+          required
+          class="w-full appearance-none rounded border-2 border-slate-200 bg-slate-200 px-4 py-2 leading-tight text-slate-700 duration-200 focus:border-sky-400 focus:border-sky-400 focus:outline-none dark:border-slate-800 dark:bg-slate-800 dark:text-slate-400"
+          name="category"
+          value="<%= item.category %>"
+          type="text" />
+      </div>
+    </div>
+    <div class="m-3 flex flex-wrap items-center justify-between">
+      <div class="">
+        <label
+          class="mb-0 pr-4 text-right font-bold text-opacity-75 dark:text-slate-300 dark:text-opacity-75"
+          for="date"
+          >Date:</label
+        >
+      </div>
+      <div class="">
+        <input
+          required
+          class="w-full w-full appearance-none rounded border-2 border-slate-200 bg-slate-200 px-4 py-2 leading-tight text-slate-700 duration-200 focus:border-sky-400 focus:border-sky-400 focus:outline-none dark:border-slate-800 dark:bg-slate-800 dark:text-slate-400"
+          name="date"
+          value="<%= normalizeDate(item.date) %>"
+          type="date" />
+      </div>
+    </div>
+    <div class="my-5 flex justify-evenly">
+      <a
+        class="cursor-pointer rounded-lg bg-slate-400 px-4 py-2 text-white duration-200 hover:bg-slate-500 dark:hover:bg-slate-300"
+        href="/transactions"
+        >Cancel</a
+      >
+      <input
+        class="cursor-pointer rounded-lg bg-sky-400 px-4 py-2 text-white duration-200 hover:bg-sky-300 dark:hover:bg-sky-500"
+        type="submit"
+        value="Done" />
+    </div>
+  </div>
 </form>

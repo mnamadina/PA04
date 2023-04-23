@@ -1,0 +1,32 @@
+<h1 class="mt-10 text-2xl font-bold">
+    Summary of all transactions by categroy
+  </h1>
+  <a
+    href="/transactions"
+    class="my-5 flex items-center gap-2 text-sky-400 hover:text-sky-300 dark:hover:text-sky-500">
+    <i class="fa-solid fa-arrow-left"></i>
+    <p>Back to transactions</p>
+  </a>
+  
+  <div
+    class="max-h-content relative mb-16 mt-10 overflow-x-auto shadow-md sm:rounded-lg">
+    <table
+      class="w-full rounded-lg text-left text-sm text-slate-500 dark:text-slate-400">
+      <thead
+        class="rounded-lg bg-slate-50 text-xs uppercase text-slate-700 dark:bg-slate-700 dark:text-slate-400">
+        <th scope="col" class="px-6 py-3">Category</th>
+        <th scope="col" class="px-6 py-3">Total amount</th>
+      </thead>
+      <% results.map(item => { %>
+      <tr
+        class="border-b border-sky-400 bg-white dark:border-sky-400 dark:bg-slate-800">
+        <td
+          class="whitespace-nowrap px-6 py-4 font-medium text-slate-900 dark:text-white">
+          <%= item._id %>
+        </td>
+        <td class="px-6 py-4"><%= item.total %></td>
+      </tr>
+      <% }) %>
+    </table>
+  </div>
+  
