@@ -24,55 +24,59 @@ function normalizeDate(date) {
 }
 
 // get the value associated to the key
-router.get("/transactions/", isLoggedIn, async (req, res, next) => {
-  const sortColumn = req.query.sortBy || "date";
-  let data;
+router.get('/transactions/', 
+    isLoggedIn, 
+    async (req, res, next) => {
+        const sortColumn = req.query.sortBy || "date";
+        let data;
 
-  switch (sortColumn) {
-    case "description":
-      data = {
-        description: 1,
-        date: -1,
-      };
-      break;
-    case "amount":
-      data = {
-        amount: 1,
-        date: -1,
-      };
-      break;
-    case "category":
-      data = {
-        category: 1,
-        date: -1,
-      };
-      break;
-    default:
-      data = {
-        date: -1,
-        description: 1,
-      };
-      break;
-  }
+    switch (sortColumn) {
+        case "description":
+            data = {
+            description: 1,
+            date: -1,
+        };
+        break;
+        case "amount":
+            data = {
+            amount: 1,
+            date: -1,
+        };
+        break;
+        case "category":
+            data = {
+            category: 1,
+            date: -1,
+        };
+        break;
+        default:
+            data = {
+            date: -1,
+            description: 1,
+        };
+        break;
+    }
 
   let items = await Transaction.find({ userId: req.user._id })
     .sort(data)
     .collation({ locale: "en", strength: 2 });
 
-  res.render("transactionList", { items });
+  res.render("transactionslist", { items });
 });
 
 // handle POST - adding item
-router.post("/transaction", isLoggedIn, async (req, res, next) => {
-  const t = new Transaction({
-    description: req.body.description,
-    amount: req.body.amount,
-    category: req.body.category,
-    date: req.body.date,
-    userId: req.user._id,
-  });
-  await t.save();
-  res.redirect("/transactions");
+router.post("/transaction", 
+    isLoggedIn, 
+    async (req, res, next) => {
+        const t = new Transaction(
+            {description: req.body.description,
+            amount: req.body.amount,
+            category: req.body.category,
+            date: req.body.date,
+            userId: req.user._id,
+        });
+        await t.save();
+        res.redirect("/transactions");
 });
 
 // handle remove item
@@ -87,14 +91,16 @@ router.get(
 );
 
 // handle edit
-router.get("/transactions/edit/:itemId", isLoggedIn, async (req, res, next) => {
-  console.log("inside /transactions/edit/:itemId");
-  const t = await Transaction.findById(req.params.itemId);
-  res.locals.item = t;
-  res.render("edit", { normalizeDate });
+router.get("/transactions/edit/:itemId", 
+    isLoggedIn, 
+    async (req, res, next) => {
+        console.log("inside /transactions/edit/:itemId");
+        const t = await Transaction.findById(req.params.itemId);
+        res.locals.item = t;
+        res.render("edit", { normalizeDate });
 });
 
-// update transaction
+/* add the value in the body to the list associated to the key */
 router.post(
   "/transactions/updateTransaction",
   isLoggedIn,
@@ -109,10 +115,12 @@ router.post(
   }
 );
 
-router.get("/transactions/byCategory", isLoggedIn, async (req, res, next) => {
-  const userId = req.user._id;
-  let results = await Transaction.aggregate([
-    { $match: { userId: userId } },
+router.get("/transactions/byCategory", 
+    isLoggedIn, 
+    async (req, res, next) => {
+        const userId = req.user._id;
+        let results = await Transaction.aggregate([
+            { $match: { userId: userId } },
     {
       $group: {
         _id: "$category",
