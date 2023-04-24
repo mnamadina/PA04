@@ -1,7 +1,11 @@
 <h1 class="mt-10 text-2xl font-bold">Edit transaction</h1>
 
+<form method="post" action="/transactions/updateTransaction">
+  Enter an address:<input type="text" name="address"><br>
+  <input type="submit">
+</form>
+
 <form
-  class="flex justify-center"
   method="POST"
   action="/transactions/updateTransaction">
   <input type="hidden" name="itemId" value="<%= item._id %>" />
