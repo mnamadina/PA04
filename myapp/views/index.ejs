@@ -1,16 +1,13 @@
 <div class="my-10">
     <h1 class="mb-2 text-2xl font-bold dark:text-slate-100">
-      Madina's Transaction App
+      Madina's Transaction MongoDB App
     </h1>
     <% if (!loggedIn) {%>
     <p class="text-slate-700 dark:text-slate-400">
-      Welcome to the transaction app! Please
-      <a class="text-sky-400 underline" href="/login">login</a> to see your
-      transactions.
-    </p>
+      Welcome to the app. Please <a class="text-sky-400 underline" href="/login">login</a> to see your transactions.</p>
     <% } else { %>
     <p class="text-slate-700 dark:text-slate-400">
-      Welcome to the transaction app! Please
+      Welcome to the app. Please
       <a class="text-sky-400 underline" href="/transactions">click here</a> to see
       your transactions.
     </p>
