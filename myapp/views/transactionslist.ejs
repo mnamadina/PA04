@@ -1,63 +1,85 @@
-<h1 class="mt-10 text-2xl font-bold">
-    Transactions for <%= user.username.charAt(0).toUpperCase() +
-    user.username.slice(1)%>
-  </h1>
-  <div class="my-5">
-    <a
-      class="cursor-pointer rounded-lg bg-sky-400 px-4 py-2 text-white duration-200 hover:bg-sky-300 dark:hover:bg-sky-500"
-      href="transactions/byCategory"
-      >Group by Category</a
-    >
-  </div>
-  
-  <p class="text-slate-700 dark:text-slate-400">
-    Here is your list of things to do!  </p>
-  
-  <div
-    class="max-h-content relative mb-16 mt-10 overflow-x-auto shadow-md sm:rounded-lg">
-    <ul class="list-group">
-      <% items.forEach(item => { %>
-          <li class="list-group-item">
-              <span class="">
-                  <% if (item.completed) { %>
-                    <a 
-                      href="/transactions/uncomplete/<%= item._id %>">
-                      <i class="bi bi-check-circle-fill"></i>
-                  </a>
-                  <% } else {%>
-                    <a 
-                      href="/transactions/complete/<%= item._id %>">
-                      <i class="bi bi-check-circle"></i>
-                  </a>
-                  <%} %>
-                  <a href="/transactions/remove/<%=item._id %>">
-                    <i class="bi bi-trash"></i>
-                  </a>
-              </span>
-              <span class="mx-5">
-                <%= item.item %>
-              </span>
-              <span class="badge rounded-pill bg-danger">
-                <%= item.priority?item.priority:5 %> 
-              </span>
-              <a 
-                 href="/transactions/edit/<%=item._id %>">
-                <i class="bi bi-pencil-square"></i>
-            </a>
-                
-          </li>
-  </div>
-  
-  <form method="post" action="transaction">
-    description: <input type="text" name="description">
-    <br>
-    category: <input type="text" name="category">
-    <br>
-    amount: <input type="number" name="amount">
-    <br>
-    date: <input type="date" name="date">
-    <br>
-    <input type="submit" value="store">
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit-code.js"></script>
 
-  
+  </head>
+<body>
+  <h1> Transactions for <%=username%>@me.com </h1>
+  <p> Here is your list of transactions! </p>
+
+    <div class="table-container">
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <td>
+                  <a class="btn btn-primary" href="/transactions/byCategory" role="button">group by category</a>
+                </td>
+                <td>
+                  <a class="btn btn-primary" href="/transactions?sortBy=category&sortOrder=<%= sortOrder = 'asc'%>" role="button">sort by category</a>
+                </td>
+                <td>
+                  <a class="btn btn-primary" href="/transactions?sortBy=amount&sortOrder=<%= sortOrder = 'asc'%>" role="button">sort by amount</a>
+                </td>
+                <td>
+                  <a class="btn btn-primary" href="/transactions?sortBy=description&sortOrder=<%= sortOrder = 'asc'%>" role="button">sort by description</a>
+                </td>
+                <td>
+                  <a class="btn btn-primary" href="/transactions?sortBy=date&sortOrder=<%= sortOrder = 'asc'%>" role="button">sort by date</a>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+                <tr>
+                    <th>description</th>
+                    <th>amount</th>
+                    <th>category</th>
+                    <th>date</th>
+                    <th>delete</th>
+                    <th>edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% items.forEach((item) => { %>
+                    <tr>
+                        <td><%= item.description %></td>
+                        <td><%= item.amount %></td>
+                        <td><%= item.category %></td>
+                        <td><%= normalizeDate(new Date(item.date)) %></td>
+                        <td>
+                            <a href="/transactions/delete/<%= item._id %>">
+                              <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/transactions/edit/<%= item._id %>">
+                              <i class="bi bi-pencil"></i>
+                            </a>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        <!-- New form to add a transaction -->
+        <h1> Add a New Transaction </h1>
+        <form method="post" action="/transactions">
+          Description: <input type="text" name="description" required>
+          <br>
+          Amount: <input type="number" name="amount">
+          <br>
+          Category: <input type="text" name="category">
+          <br>
+          Date: <input type="date" name="date">
+          <br>
+          <input type="submit" value="Add Transaction">
+      </form>
+    </div>
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit-code.js"></script>
+</body>
+</html>
