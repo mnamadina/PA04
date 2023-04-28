@@ -115,7 +115,7 @@ router.post(
   }
 );
 
-router.get('/transactions/byCategory',
+router.get("transactions/byCategory",
   isLoggedIn,
   async (req, res, next) => {
     console.log("inside /transactions/byCategory")
@@ -131,7 +131,7 @@ router.get('/transactions/byCategory',
                     }},
                   {$sort:{total:-1}},              
                 ])
-        res.render('byCategory', {results})
+        res.render("byCategory", {results})
 });
 
 module.exports = router;
