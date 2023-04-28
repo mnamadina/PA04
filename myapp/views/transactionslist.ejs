@@ -54,7 +54,7 @@
                         <td><%= Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short',
                           day: '2-digit', year: 'numeric' }).format( item.date) %></td>
                         <td>
-                            <a href="/transactions/delete/<%= item._id %>">
+                            <a href="/transactions/remove/<%= item._id %>">
                               <i class="bi bi-trash"></i>
                             </a>
                         </td>
