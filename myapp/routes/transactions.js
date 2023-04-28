@@ -115,10 +115,10 @@ router.post(
   }
 );
 
-router.get('/transaction/byCategory',
+router.get('/transactions/byCategory',
   isLoggedIn,
   async (req, res, next) => {
-    console.log("inside /transaction/byCategory")
+    console.log("inside /transactions/byCategory")
     const userId = req.user._id
       let results =
             await transactionItem.aggregate(
