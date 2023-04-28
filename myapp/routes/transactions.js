@@ -115,19 +115,23 @@ router.post(
   }
 );
 
-router.get("/transactions/byCategory", 
-    isLoggedIn, 
-    async (req, res, next) => {
-        const userId = req.user._id;
-        let results = await Transaction.aggregate([
-            {$match: { userId: userId } },
-            {$group: { _id: "$category", total: { $sum: "$amount" },
-            },
-    },
-  ]);
-  console.log(results);
-
-  res.render("byCategory", { results });
+router.get('/transaction/byCategory',
+  isLoggedIn,
+  async (req, res, next) => {
+    console.log("inside /transaction/byCategory")
+    const userId = req.user._id
+      let results =
+            await transactionItem.aggregate(
+                [ 
+                  {$match:{
+                    userId: userId}},
+                  {$group:{
+                    _id:'$category',
+                    total:{$sum:1}
+                    }},
+                  {$sort:{total:-1}},              
+                ])
+        res.render('byCategory', {results})
 });
 
 module.exports = router;
