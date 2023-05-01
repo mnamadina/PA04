@@ -121,9 +121,9 @@ router.get("/transactions/byCategory",
         const userId = req.user._id;
         let results = await Transaction.aggregate([
             {$match: { userId: userId } },
-            {$group: { _id: "$category", total: { $sum: "$amount" },
-            },
-    },
+            {$group: { _id: "$category", total: { $sum:1}
+          }},
+          {$sort:{total:-1}}
   ]);
   console.log(results);
 
